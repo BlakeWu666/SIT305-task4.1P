@@ -17,37 +17,14 @@ public class secondPage extends AppCompatActivity {
     TextView workoutText;
     Button startTimerBtn, stopTimerBtn, restBtn;
 
-    Bundle extras = getIntent().getExtras();
-    int durationInput = extras.getInt("durationUserInput");
-    int restInput = extras.getInt("restUserInput");
-    Handler h  = new Handler();
+    int durationInput;
+    int restInput;
 
-    public void count(){
-        durationInput--;
-        workoutText.setText("Time remaining :" + durationInput);
-        h.postDelayed(r, 1000);
-    }
+    Handler h;
 
-    private Runnable r = new Runnable() {
-        @Override
-        public void run() {
-            count();
-        }
-    };
+    Runnable r;
 
-    CountDownTimer myTimer = new CountDownTimer(restInput,1000) {
-        @Override
-        public void onTick(long millisUntilFinished) {
-            count();
-        }
-
-        @Override
-        public void onFinish() {
-            workoutText.setText("Done!");
-        }
-    };
-
-
+    CountDownTimer myTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +35,23 @@ public class secondPage extends AppCompatActivity {
         startTimerBtn = findViewById(R.id.startTimerBtn);
         stopTimerBtn = findViewById(R.id.stopTimerBtn);
         restBtn = findViewById(R.id.restBtn);
+
+        Bundle extras = getIntent().getExtras();
+        long durationInput = extras.getLong("durationUserInput");
+        long restInput = extras.getLong("restUserInput");
+
+        h  = new Handler();
+
+        myTimer = new CountDownTimer(durationInput * 1000,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                workoutText.setText("Time remaining: " +  millisUntilFinished/ 1000);
+            }
+            @Override
+            public void onFinish() {
+                workoutText.setText("Done!");
+            }
+        };
 
         restBtn.setOnClickListener(new View.OnClickListener() {
             @Override

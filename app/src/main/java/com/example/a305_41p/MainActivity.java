@@ -15,20 +15,18 @@ public class MainActivity extends AppCompatActivity {
     EditText duration, rest;
     Button start;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        welcome = findViewById(R.id.welcome);
-        duration = findViewById(R.id.duration);
-        rest = findViewById(R.id.rest);
-        start = findViewById(R.id.startBtn);
+        welcome = (TextView)findViewById(R.id.welcome);
+        duration = (EditText)findViewById(R.id.duration);
+        rest = (EditText)findViewById(R.id.rest);
+        start = (Button)findViewById(R.id.startBtn);
 
         String durationInput = duration.getText().toString();
         String restInput = rest.getText().toString();
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,9 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent mainToSecond = new Intent(MainActivity.this,secondPage.class);
                 mainToSecond.putExtra("durationUserInput", durationInput);
                 mainToSecond.putExtra("restUserInput", restInput);
-
                 startActivity(mainToSecond);
-
             }
         });
 
